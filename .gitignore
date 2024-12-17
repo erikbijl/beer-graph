@@ -163,4 +163,4 @@ cython_debug/
 
 
 code/credentials.env
-
+.DS_Store
