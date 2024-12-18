@@ -1,0 +1,179 @@
+{
+  "style": {
+    "font-family": "sans-serif",
+    "background-color": "#ffffff",
+    "background-image": "",
+    "background-size": "100%",
+    "node-color": "#ffffff",
+    "border-width": 4,
+    "border-color": "#000000",
+    "radius": 50,
+    "node-padding": 5,
+    "node-margin": 2,
+    "outside-position": "auto",
+    "node-icon-image": "",
+    "node-background-image": "",
+    "icon-position": "inside",
+    "icon-size": 64,
+    "caption-position": "inside",
+    "caption-max-width": 200,
+    "caption-color": "#000000",
+    "caption-font-size": 50,
+    "caption-font-weight": "normal",
+    "label-position": "inside",
+    "label-display": "pill",
+    "label-color": "#000000",
+    "label-background-color": "#ffffff",
+    "label-border-color": "#000000",
+    "label-border-width": 4,
+    "label-font-size": 40,
+    "label-padding": 5,
+    "label-margin": 4,
+    "directionality": "directed",
+    "detail-position": "inline",
+    "detail-orientation": "parallel",
+    "arrow-width": 5,
+    "arrow-color": "#000000",
+    "margin-start": 5,
+    "margin-end": 5,
+    "margin-peer": 20,
+    "attachment-start": "normal",
+    "attachment-end": "normal",
+    "relationship-icon-image": "",
+    "type-color": "#000000",
+    "type-background-color": "#ffffff",
+    "type-border-color": "#000000",
+    "type-border-width": 0,
+    "type-font-size": 16,
+    "type-padding": 5,
+    "property-position": "outside",
+    "property-alignment": "colon",
+    "property-color": "#000000",
+    "property-font-size": 16,
+    "property-font-weight": "normal"
+  },
+  "nodes": [
+    {
+      "id": "n0",
+      "position": {
+        "x": -96,
+        "y": -82.00000000000004
+      },
+      "caption": "",
+      "style": {},
+      "labels": [
+        "Beer"
+      ],
+      "properties": {
+        "name": "",
+        "description": "",
+        "embedding": "",
+        "fastrp-embedding": ""
+      }
+    },
+    {
+      "id": "n1",
+      "position": {
+        "x": 301.67558038723064,
+        "y": -201.4571193287709
+      },
+      "caption": "",
+      "style": {},
+      "labels": [
+        "Brewery"
+      ],
+      "properties": {
+        "name": "",
+        "street": "",
+        "city": "",
+        "latitude": "",
+        "longitude": "",
+        "point": ""
+      }
+    },
+    {
+      "id": "n2",
+      "position": {
+        "x": -511.229900891842,
+        "y": -82
+      },
+      "caption": "",
+      "style": {},
+      "labels": [
+        "Entity",
+        "Characteristic",
+        "Taste",
+        "Flavor",
+        "Ingredient"
+      ],
+      "properties": {
+        "name": ""
+      }
+    },
+    {
+      "id": "n3",
+      "position": {
+        "x": 301.67558038723064,
+        "y": 84.5611572265625
+      },
+      "caption": "",
+      "style": {},
+      "labels": [
+        "AlcoholPercentage"
+      ],
+      "properties": {
+        "value": ""
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "id": "n0",
+      "type": "BREWS",
+      "style": {},
+      "properties": {},
+      "fromId": "n1",
+      "toId": "n0"
+    },
+    {
+      "id": "n1",
+      "type": "HAS_INGREDIENT",
+      "style": {},
+      "properties": {},
+      "fromId": "n0",
+      "toId": "n2"
+    },
+    {
+      "id": "n2",
+      "type": "HAS_FLAVOR",
+      "style": {},
+      "properties": {},
+      "fromId": "n0",
+      "toId": "n2"
+    },
+    {
+      "id": "n3",
+      "type": "HAS_TASTE",
+      "style": {},
+      "properties": {},
+      "fromId": "n0",
+      "toId": "n2"
+    },
+    {
+      "id": "n4",
+      "type": "HAS_CHARACTERISTIC",
+      "style": {},
+      "properties": {},
+      "fromId": "n0",
+      "toId": "n2"
+    },
+    {
+      "id": "n5",
+      "type": "HAS_ALCOHOLPERCENTAGE",
+      "style": {},
+      "properties": {},
+      "fromId": "n0",
+      "toId": "n3"
+    }
+  ]
+}
