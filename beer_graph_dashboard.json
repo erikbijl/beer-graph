@@ -1,0 +1,1264 @@
+{
+  "title": "Beers Dashboard🍻🍻",
+  "version": "2.4",
+  "settings": {
+    "pagenumber": 0,
+    "editable": true,
+    "fullscreenEnabled": false,
+    "parameters": {
+      "neodash_city": "Brussels",
+      "neodash_name": "Bieren Cabardouche",
+      "neodash_beer": "Affligem Blond",
+      "neodash_beer1": "Affligem Blond",
+      "neodash_beer2": "Affligem Rood",
+      "neodash_threshold": 0.8,
+      "neodash_entity": "fruity"
+    },
+    "theme": "light"
+  },
+  "pages": [
+    {
+      "title": "General",
+      "reports": [
+        {
+          "id": "ace2b0f4-cab7-426d-a787-37acc326f38f",
+          "title": "Beers",
+          "query": "MATCH (b:Beer)\nRETURN b.name AS Beer LIMIT 100",
+          "width": 5,
+          "height": 5,
+          "x": 0,
+          "y": 2,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "Beer",
+                "value": "Beer",
+                "customization": "set variable",
+                "customizationValue": "name"
+              }
+            ]
+          }
+        },
+        {
+          "id": "89f5f6e8-7c5e-4872-a9d7-c13bcc943698",
+          "title": "Number of Beers",
+          "query": "MATCH (b:Beer)\nRETURN COUNT(b.name)\n\n\n",
+          "width": 5,
+          "height": 2,
+          "x": 0,
+          "y": 0,
+          "type": "value",
+          "selection": {},
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "bdcdeb79-b3f6-4ec4-b39d-e6e11edd465f",
+          "title": "Number of Breweries",
+          "query": "MATCH (b:Brewery)\nRETURN COUNT(b.name)\n\n\n",
+          "width": 5,
+          "height": 2,
+          "x": 5,
+          "y": 0,
+          "type": "value",
+          "selection": {},
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "4a2b41a3-ae7d-4c0e-a40b-1cf831710f2f",
+          "title": "Breweries",
+          "query": "MATCH (b:Brewery)\nRETURN b.name AS Brewery LIMIT 100\n\n\n",
+          "width": 5,
+          "height": 5,
+          "x": 5,
+          "y": 2,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "Brewery",
+                "value": "Brewery",
+                "customization": "set variable",
+                "customizationValue": "name"
+              }
+            ]
+          }
+        },
+        {
+          "id": "8d8b3a45-67da-4b01-b4aa-62bbeab99327",
+          "title": "Number of Entities",
+          "query": "MATCH (e:Entity)\nRETURN COUNT(e.name)",
+          "width": 6,
+          "height": 2,
+          "x": 10,
+          "y": 0,
+          "type": "value",
+          "selection": {},
+          "settings": {},
+          "schema": []
+        },
+        {
+          "id": "71ff0f5b-6142-47aa-80b3-23e7d8bd5ed7",
+          "title": "Entities",
+          "query": "MATCH (e:Entity)\nRETURN e.name as Entity LIMIT 100\n\n\n",
+          "width": 6,
+          "height": 5,
+          "x": 10,
+          "y": 2,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "Entity",
+                "value": "Entity",
+                "customization": "set variable",
+                "customizationValue": "name"
+              }
+            ]
+          }
+        },
+        {
+          "id": "f8e27f16-0f31-41c8-89dd-36dc153198d7",
+          "title": "Graph View",
+          "query": "MATCH (n)\nWHERE n.name = $neodash_name\nOPTIONAL MATCH p=(n)-[]-()\nRETURN n, p",
+          "width": 8,
+          "height": 7,
+          "x": 16,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "Brewery": "name",
+            "Beer": "name"
+          },
+          "settings": {
+            "nodeColorScheme": "pastel1"
+          },
+          "schema": [
+            [
+              "Brewery",
+              "city",
+              "street",
+              "latitude",
+              "name",
+              "point",
+              "longitude"
+            ],
+            [
+              "Beer",
+              "Timeframe",
+              "fastrp-embedding",
+              "name",
+              "description",
+              "embedding"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Beers",
+      "reports": [
+        {
+          "id": "e21072f8-2ed4-4ffc-82a4-6d96941e5d95",
+          "title": "Select Beers",
+          "query": "MATCH (b:Beer)\nRETURN b.name as Name LIMIT 100\n\n",
+          "width": 6,
+          "height": 7,
+          "x": 0,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "Name",
+                "value": "Name",
+                "customization": "set variable",
+                "customizationValue": "beer"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2bb23e5a-b245-4b60-adcf-e400cb4da077",
+          "title": "Beer Characteristics",
+          "query": "MATCH p=(b:Beer)-[]-(e:Entity)\nWHERE b.name = $neodash_beer\nRETURN e.name as Features\n\n",
+          "width": 6,
+          "height": 3,
+          "x": 18,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        },
+        {
+          "id": "12b21f6b-b277-421b-bf11-7514220b382d",
+          "title": "Brewery",
+          "query": "MATCH p=(b:Beer)-[]-(brew:Brewery)\nWHERE b.name = $neodash_beer\nRETURN brew.name as Name, brew.street as Street, brew.city as City\n\n",
+          "width": 6,
+          "height": 3,
+          "x": 12,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "transposed": true
+          }
+        },
+        {
+          "id": "59d53e10-8346-4029-a29d-beac33d373cd",
+          "title": "Description",
+          "query": "MATCH p=(b:Beer)\nWHERE b.name = $neodash_beer\nRETURN b.description\n\n",
+          "width": 6,
+          "height": 3,
+          "x": 6,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "fontSize": 15,
+            "fullscreenEnabled": true,
+            "textAlign": "left",
+            "wrapContent": true
+          },
+          "schema": []
+        },
+        {
+          "id": "21dab232-a88a-4110-b426-8ab0ab8d66ed",
+          "title": "Graph of $neodash_beer",
+          "query": "MATCH p=(b:Beer)-[]-()\nWHERE b.name = $neodash_beer\nRETURN p\n\n",
+          "width": 18,
+          "height": 4,
+          "x": 6,
+          "y": 3,
+          "type": "graph",
+          "selection": {
+            "Beer": "name",
+            "Entity": "name",
+            "Flavor": "name",
+            "Taste": "name",
+            "Aroma": "name",
+            "Character": "name",
+            "Complexity": "name",
+            "Blend": "name",
+            "Profile": "name",
+            "Spice": "name",
+            "Aromas": "name",
+            "Ingredient": "name",
+            "Yeast": "name",
+            "Characteristic": "name",
+            "Characteristics": "name",
+            "Note": "name",
+            "Balance": "name",
+            "Combination": "name",
+            "Color": "name",
+            "Experience": "name",
+            "Finish": "name",
+            "Base": "name",
+            "Sweetness": "name",
+            "Appearance": "name",
+            "Carbonation": "name",
+            "Mouthfeel": "name",
+            "Body": "name",
+            "Texture": "name",
+            "Notes": "name",
+            "Choice": "name",
+            "Quality": "name",
+            "Sensation": "name",
+            "Option": "name",
+            "Acidity": "name",
+            "Type": "name",
+            "AlcoholPercentage": "(label)",
+            "Brewery": "name"
+          },
+          "settings": {
+            "nodeColorScheme": "pastel1"
+          },
+          "schema": [
+            [
+              "Beer",
+              "Timeframe",
+              "fastrp-embedding",
+              "name",
+              "description",
+              "embedding"
+            ],
+            [
+              "Entity",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Flavor",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Taste",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Aroma",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Character",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Complexity",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Blend",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Profile",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Spice",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Aromas",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Ingredient",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Yeast",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Characteristic",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Characteristics",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Note",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Balance",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Combination",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Color",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Experience",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Finish",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Base",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Sweetness",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Appearance",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Carbonation",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Mouthfeel",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Body",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Texture",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Notes",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Choice",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Quality",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Sensation",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Option",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Acidity",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Type",
+              "name",
+              "type"
+            ],
+            [
+              "AlcoholPercentage",
+              "value"
+            ],
+            [
+              "Brewery",
+              "city",
+              "street",
+              "latitude",
+              "name",
+              "point",
+              "longitude"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Breweries",
+      "reports": [
+        {
+          "id": "217a74dd-89b2-42d2-bf82-a354c3c7a97e",
+          "title": "Brewery Locations",
+          "query": "MATCH (b:Brewery)\nRETURN b",
+          "width": 17,
+          "height": 5,
+          "x": 0,
+          "y": 0,
+          "type": "map",
+          "selection": {
+            "Brewery": "name"
+          },
+          "settings": {
+            "layerType": "heatmap",
+            "defaultNodeSize": "small"
+          },
+          "schema": [
+            [
+              "Brewery",
+              "city",
+              "street",
+              "latitude",
+              "name",
+              "point",
+              "longitude"
+            ]
+          ]
+        },
+        {
+          "id": "98b84014-5b91-4d69-9c38-34a1974a40e2",
+          "title": "Cities with Breweries",
+          "query": "MATCH (b:Brewery)\nRETURN b.city as City, COUNT(*) as count\nORDER BY count DESC",
+          "width": 6,
+          "height": 5,
+          "x": 17,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "City",
+                "value": "City",
+                "customization": "set variable",
+                "customizationValue": "city"
+              }
+            ]
+          }
+        },
+        {
+          "id": "2a791442-6151-49eb-ba75-e88b424a1d30",
+          "title": "Breweries in $neodash_city",
+          "query": "MATCH (b:Brewery)\nWHERE b.city = $neodash_city\nRETURN b.name as brewery\n\n\n",
+          "width": 9,
+          "height": 6,
+          "x": 0,
+          "y": 5,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "brewery",
+                "value": "brewery",
+                "customization": "set variable",
+                "customizationValue": "name"
+              }
+            ]
+          }
+        },
+        {
+          "id": "062c645e-78d7-468e-8894-9f3ae492bff6",
+          "title": "Location of $neodash_name",
+          "query": "MATCH (b:Brewery)\nWHERE b.name = $neodash_name\nRETURN b\n\n",
+          "width": 15,
+          "height": 6,
+          "x": 9,
+          "y": 5,
+          "type": "map",
+          "selection": {
+            "Brewery": "name"
+          },
+          "settings": {
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "",
+                "value": "",
+                "customization": "set variable",
+                "customizationValue": ""
+              }
+            ]
+          },
+          "schema": [
+            [
+              "Brewery",
+              "city",
+              "street",
+              "latitude",
+              "name",
+              "point",
+              "longitude"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "Entities",
+      "reports": [
+        {
+          "id": "ff056679-8718-455d-b2ce-94025f4ad7fa",
+          "title": "Most Common Entities",
+          "query": "MATCH p=(e:Entity)-[]-(b:Beer)\nRETURN e.name AS Entity, COUNT(*) as Count\nORDER BY Count DESC LIMIT 100",
+          "width": 5,
+          "height": 7,
+          "x": 0,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "Entity",
+                "value": "Entity",
+                "customization": "set variable",
+                "customizationValue": "entity"
+              }
+            ]
+          }
+        },
+        {
+          "id": "a5126aed-04d8-426d-84b8-a0c9a65996e5",
+          "title": "Least Common Entities",
+          "query": "MATCH p=(e:Entity)-[]-(b:Beer)\nWITH e.name AS Entity, COUNT(*) as Count\nWHERE Count > 1\nRETURN Entity, Count\nORDER BY Count LIMIT 100\n\n\n",
+          "width": 5,
+          "height": 7,
+          "x": 5,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "styleRules": [
+              {
+                "field": "Entity",
+                "condition": "=",
+                "value": "",
+                "customization": "row color",
+                "customizationValue": "black"
+              }
+            ],
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "Entity",
+                "value": "Entity",
+                "customization": "set variable",
+                "customizationValue": "entity"
+              }
+            ]
+          }
+        },
+        {
+          "id": "97a7ce99-7a1f-4195-8c45-09ec2cdbf010",
+          "title": "Beers with $neodash_entity",
+          "query": "MATCH p=(e:Entity)-[]-(:Beer)\nWHERE e.name = $neodash_entity\nRETURN p LIMIT 100\n\n\n",
+          "width": 14,
+          "height": 4,
+          "x": 10,
+          "y": 0,
+          "type": "graph",
+          "selection": {
+            "Entity": "name",
+            "Flavor": "name",
+            "Yeast": "name",
+            "Taste": "name",
+            "Characteristic": "name",
+            "Aroma": "name",
+            "Character": "name",
+            "Characteristics": "name",
+            "Preference": "name",
+            "Profile": "name",
+            "Undertone": "name",
+            "Experience": "name",
+            "Note": "name",
+            "Esters": "name",
+            "Complexity": "name",
+            "Esther": "name",
+            "Undertones": "name",
+            "Combination": "name",
+            "Ester": "name",
+            "Beer": "name"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "Entity",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Flavor",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Yeast",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Taste",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Characteristic",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Aroma",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Character",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Characteristics",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Preference",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Profile",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Undertone",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Experience",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Note",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Esters",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Complexity",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Esther",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Undertones",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Combination",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Ester",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Beer",
+              "Timeframe",
+              "fastrp-embedding",
+              "name",
+              "description",
+              "embedding"
+            ]
+          ]
+        },
+        {
+          "id": "3b64f81e-d141-4c3d-b8f2-86dfbe58e184",
+          "title": "Beers and Brewery with $neodash_entity",
+          "query": "MATCH p=(e:Entity)-[]-(b:Beer)-[]-(brew:Brewery)\nWHERE e.name = $neodash_entity\nRETURN b.name as Beer, brew.name as Brewery\n\n\n",
+          "width": 14,
+          "height": 3,
+          "x": 10,
+          "y": 4,
+          "type": "table",
+          "selection": {},
+          "settings": {}
+        }
+      ]
+    },
+    {
+      "title": "Beer Compariser",
+      "reports": [
+        {
+          "id": "31dd6ee9-f074-412c-95c9-f61422d47ec1",
+          "title": "Select Beer 1",
+          "query": "MATCH (b:Beer)\nRETURN b.name as Name\nLIMIT 200\n\n",
+          "width": 6,
+          "height": 7,
+          "x": 0,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "Name",
+                "value": "Name",
+                "customization": "set variable",
+                "customizationValue": "beer1"
+              }
+            ]
+          }
+        },
+        {
+          "id": "0f15de9c-5681-4624-ae54-9a8920c9c4df",
+          "title": "Select Beer 2",
+          "query": "MATCH (b:Beer)\nRETURN b.name as Name\nLIMIT 200\n\n\n\n\n",
+          "width": 6,
+          "height": 7,
+          "x": 6,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "Name",
+                "value": "Name",
+                "customization": "set variable",
+                "customizationValue": "beer2"
+              }
+            ]
+          }
+        },
+        {
+          "id": "92f702be-2294-445f-a1fb-ce8aa3489d46",
+          "title": "Characteristics of $neodash_beer1 and $neodash_beer2",
+          "query": "MATCH p1=(b1:Beer)-[]-(:Entity)\nWHERE b1.name = $neodash_beer1 \nMATCH p2=(b2:Beer)-[]-(:Entity)\nWHERE b2.name = $neodash_beer2\nRETURN p1, p2\n",
+          "width": 12,
+          "height": 4,
+          "x": 12,
+          "y": 3,
+          "type": "graph",
+          "selection": {
+            "Beer": "name",
+            "Entity": "name",
+            "Flavor": "name",
+            "Taste": "name",
+            "Aroma": "name",
+            "Characteristic": "name",
+            "Character": "name",
+            "Body": "name",
+            "Characteristics": "name",
+            "Profile": "name",
+            "Finish": "name",
+            "Combination": "name",
+            "Note": "name",
+            "Texture": "name",
+            "Ingredient": "name",
+            "Balance": "name",
+            "Base": "name",
+            "Sweetness": "name",
+            "Carbonation": "name",
+            "Mouthfeel": "name",
+            "Level": "name",
+            "Backbone": "name",
+            "ABV": "name",
+            "Blend": "name",
+            "Appearance": "name",
+            "Color": "name",
+            "Type": "name",
+            "Complexity": "name",
+            "Spice": "name",
+            "Aromas": "name",
+            "Yeast": "name",
+            "Experience": "name",
+            "Notes": "name",
+            "Choice": "name",
+            "Quality": "name",
+            "Sensation": "name",
+            "Option": "name",
+            "Acidity": "name"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "Beer",
+              "Timeframe",
+              "fastrp-embedding",
+              "name",
+              "description",
+              "embedding"
+            ],
+            [
+              "Entity",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Flavor",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Taste",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Aroma",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Characteristic",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Character",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Body",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Characteristics",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Profile",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Finish",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Combination",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Note",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Texture",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Ingredient",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Balance",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Base",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Sweetness",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Carbonation",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Mouthfeel",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Level",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Backbone",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "ABV",
+              "name"
+            ],
+            [
+              "Blend",
+              "name",
+              "fastrp-embedding"
+            ],
+            [
+              "Appearance",
+              "name",
+              "fastrp-embedding"
+            ],
+            [
+              "Color",
+              "name",
+              "fastrp-embedding"
+            ],
+            [
+              "Type",
+              "name"
+            ],
+            [
+              "Complexity",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Spice",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Aromas",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Yeast",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Experience",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Notes",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Choice",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Quality",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Sensation",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Option",
+              "fastrp-embedding",
+              "name"
+            ],
+            [
+              "Acidity",
+              "fastrp-embedding",
+              "name"
+            ]
+          ]
+        },
+        {
+          "id": "381052c0-eb95-4f2a-afdf-6742967dcf7e",
+          "title": "Jaccard Similarity",
+          "query": "MATCH (a:Beer)-[]->(e1:Entity)\nWHERE a.name = $neodash_beer1 \nWITH a, COUNT(DISTINCT e1) as entities_a\nMATCH (b:Beer)-[]->(e2:Entity)\nWHERE b.name = $neodash_beer2 \nWITH a,b, entities_a, COUNT(DISTINCT e2) as entities_b\nOPTIONAL MATCH (a)-[]->(e3:Entity)<-[]-(b)\nWITH entities_a, entities_b, toFloat(COUNT(DISTINCT e3)) as overlap\nWITH (entities_a-overlap) as entities_a, (entities_b-overlap) as entities_b, overlap\nRETURN CASE overlap WHEN =entities_a, =entities_b, =0 THEN 100 ELSE (overlap / (entities_a + (entities_b))) * 100 END as Jaccard_Index",
+          "width": 4,
+          "height": 3,
+          "x": 20,
+          "y": 0,
+          "type": "gauge",
+          "selection": {},
+          "settings": {
+            "colors": "#EA4228, #F5CD19, #5BE12C",
+            "arcsLength": "0,33, 0,33, 0,33",
+            "marginBottom": 10,
+            "marginTop": 10,
+            "marginRight": 10,
+            "marginLeft": 10
+          },
+          "schema": []
+        },
+        {
+          "id": "2b8fbafc-1da1-462e-95bd-faf7f70a9d43",
+          "title": "Similar Characteristics",
+          "query": "MATCH (a:Beer), (b:Beer)\nWHERE a.name = $neodash_beer1 AND b.name = $neodash_beer2\nOPTIONAL MATCH p=(a)-[]->(e:Entity)<-[]-(b)\nRETURN DISTINCT e.name as Characteristic\n\n",
+          "width": 8,
+          "height": 3,
+          "x": 12,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "compact": true
+          }
+        }
+      ]
+    },
+    {
+      "title": "Recommendations",
+      "reports": [
+        {
+          "id": "e6dbe45a-7519-4aa0-9c04-b233241b1e2f",
+          "title": "Select Beer",
+          "query": "MATCH (b:Beer)\nRETURN b.name as Name\nLIMIT 200\n\n\n\n\n",
+          "width": 5,
+          "height": 8,
+          "x": 0,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "Name",
+                "value": "Name",
+                "customization": "set variable",
+                "customizationValue": "beer"
+              }
+            ]
+          }
+        },
+        {
+          "id": "583ac626-229e-4f16-9762-cb9e6d162f95",
+          "title": "Select Threshold",
+          "query": "UNWIND [x IN range(10, 20) | x * 0.05] AS threshold\nRETURN threshold\n\n\n",
+          "width": 4,
+          "height": 8,
+          "x": 5,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "actionsRules": [
+              {
+                "condition": "Click",
+                "field": "threshold",
+                "value": "threshold",
+                "customization": "set variable",
+                "customizationValue": "threshold"
+              }
+            ]
+          }
+        },
+        {
+          "id": "12ce621e-c76b-4eb9-8e5c-6c8579fb97c4",
+          "title": "Recommended based on $neodash_beer and Scores",
+          "query": "MATCH (b:Beer)-[r:SIMILAR_BEER]->(b2:Beer)-[]-(brew:Brewery)\nWHERE b.name = $neodash_beer AND r.score > $neodash_threshold\nRETURN b2.name as Beer, brew.name as Brewery, b2.description as Description, r.score as Score\nORDER BY Score DESC",
+          "width": 15,
+          "height": 4,
+          "x": 9,
+          "y": 0,
+          "type": "table",
+          "selection": {},
+          "settings": {
+            "fullscreenEnabled": true
+          }
+        },
+        {
+          "id": "af0f7c87-c7e1-4878-9c4f-9b7f9af03d3c",
+          "title": "Graph of Recommended Beers",
+          "query": "MATCH p=(b:Beer)-[r:SIMILAR_BEER]->(b2:Beer)-[]-(brew:Brewery)\nWHERE b.name = $neodash_beer AND r.score > $neodash_threshold\nRETURN p\n\n\n\n",
+          "width": 15,
+          "height": 4,
+          "x": 9,
+          "y": 4,
+          "type": "graph",
+          "selection": {
+            "Beer": "name",
+            "Brewery": "name"
+          },
+          "settings": {},
+          "schema": [
+            [
+              "Beer",
+              "Timeframe",
+              "fastrp-embedding",
+              "name",
+              "description",
+              "embedding"
+            ],
+            [
+              "Brewery",
+              "city",
+              "street",
+              "latitude",
+              "name",
+              "point",
+              "longitude"
+            ]
+          ]
+        }
+      ]
+    },
+    {
+      "title": "GraphRAG Chatbot",
+      "reports": [
+        {
+          "id": "6bad7b26-0123-4ab6-b4f5-7a4b481cacfa",
+          "title": "Chatbot",
+          "query": "http://127.0.0.1:7860/?__theme=light\n\n\n",
+          "width": 24,
+          "height": 8,
+          "x": 0,
+          "y": 0,
+          "type": "iframe",
+          "selection": {},
+          "settings": {},
+          "schema": []
+        }
+      ]
+    },
+    {
+      "title": "Text2Cypher",
+      "reports": []
+    }
+  ],
+  "parameters": {},
+  "extensions": {
+    "active": true,
+    "activeReducers": [],
+    "actions": {
+      "active": true
+    },
+    "styling": {
+      "active": true
+    },
+    "advanced-charts": {
+      "active": true
+    }
+  },
+  "uuid": "4bf3f582-5665-4303-8944-f18f844481d1"
+}
