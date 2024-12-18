@@ -1,4 +1,4 @@
-# Beer Graph
+# Beer Graph 🍻
 
 The following project contains all the files needed to run the Beer Graph Demo. The following is needed to run the demo: 
 - **Dump file**: Neo4j snapshot with the data used in the Demo. Version is 5.26-aura. 
